@@ -45,7 +45,9 @@ public class ISR extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        launch(args);
+       Principal p = new Principal();   
+       p.setVisible(true);
+        
     }
     
 }

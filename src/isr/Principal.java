@@ -38,21 +38,25 @@ public class Principal extends javax.swing.JFrame {
         setResizable(false);
 
         jButton1.setBackground(new java.awt.Color(221, 178, 79));
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Mantenimiento de Cargos");
         jButton1.setBorderPainted(false);
         jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         jButton2.setBackground(new java.awt.Color(23, 114, 92));
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Mantenimiento de Enpleados");
         jButton2.setBorderPainted(false);
         jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         jButton3.setBackground(new java.awt.Color(85, 133, 154));
+        jButton3.setForeground(new java.awt.Color(255, 255, 255));
         jButton3.setText("Imprimir Planilla");
         jButton3.setBorderPainted(false);
         jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         jButton4.setBackground(new java.awt.Color(153, 0, 0));
+        jButton4.setForeground(new java.awt.Color(255, 255, 255));
         jButton4.setText("Salir");
         jButton4.setBorderPainted(false);
         jButton4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
