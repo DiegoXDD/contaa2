@@ -27,7 +27,11 @@ public class empleados {
     String nombre_trabajador;
     String apellido_trabajador;
     String dui_trabajador;
-    String cargo;
+    String nit_trabajador;
+    String telefono_trabajador;
+    String correo_trabajador;
+    String direccion_trabajador;
+    int cargo;
     
     public int getId() {
         return id;
@@ -60,12 +64,44 @@ public class empleados {
     public void setDui_trabajador(String dui_trabajador) {
         this.dui_trabajador = dui_trabajador;
     }
-    
-     public String getCargo() {
+
+    public String getNit_trabajador() {
+        return nit_trabajador;
+    }
+
+    public void setNit_trabajador(String nit_trabajador) {
+        this.nit_trabajador = nit_trabajador;
+    }
+
+    public String getTelefono_trabajador() {
+        return telefono_trabajador;
+    }
+
+    public void setTelefono_trabajador(String telefono_trabajador) {
+        this.telefono_trabajador = telefono_trabajador;
+    }
+
+    public String getCorreo_trabajador() {
+        return correo_trabajador;
+    }
+
+    public void setCorreo_trabajador(String correo_trabajador) {
+        this.correo_trabajador = correo_trabajador;
+    }
+
+    public String getDireccion_trabajador() {
+        return direccion_trabajador;
+    }
+
+    public void setDireccion_trabajador(String direccion_trabajador) {
+        this.direccion_trabajador = direccion_trabajador;
+    }
+
+    public int getCargo() {
         return cargo;
     }
 
-    public void setCargo(String cargo) {
+    public void setCargo(int cargo) {
         this.cargo = cargo;
     }
     
@@ -88,7 +124,7 @@ public class empleados {
         cmd.setString(1, nombre_trabajador);
         cmd.setString(2, apellido_trabajador);
         cmd.setString(3, dui_trabajador);
-        cmd.setString(4, cargo);
+        cmd.setInt(4, cargo);
         //Si da error devuelve 1, caso contrario 0
         //Tomar en cuenta el "!" de negación
         if(!cmd.execute())
@@ -116,7 +152,7 @@ public class empleados {
         cmd.setString(1, nombre_trabajador);
         cmd.setString(2, apellido_trabajador);
         cmd.setString(3, dui_trabajador);
-        cmd.setString(4, cargo);
+        cmd.setInt(4, cargo);
         //Si da error devuelve 1, caso contrario 0
         //Tomar en cuenta el "!" de negación
         if(!cmd.execute())

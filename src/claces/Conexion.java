@@ -18,7 +18,7 @@ import java.sql.Statement;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 public class Conexion {
-    
+    public static String Cargo;
    public static String url="jdbc:sqlserver://localhost;databaseName=planilla;integratedSecurity=true;";
    
        //public static String urlWindows = "jdbc:sqlserver://localhost;databaseName=PTC;integratedSecurity=true";

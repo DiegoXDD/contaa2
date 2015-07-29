@@ -5,6 +5,21 @@
  */
 package isr;
 
+import claces.Conexion;
+import claces.empleados;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author HP
@@ -14,12 +29,41 @@ public class empleado extends javax.swing.JFrame {
     /**
      * Creates new form empleado
      */
+    private PreparedStatement SentenciaSQL; 
+    int maximo=1;
     public empleado() {
         initComponents();
         setLocationRelativeTo(null);
         txtId.setVisible(false);
     }
-
+ public void Limpiar(){
+        txtNombres.setText(null);
+        txtApellidos.setText(null);
+        txtDui.setText(null);
+        txtNit.setText(null);
+        txtTelefono.setText(null);
+       txtCorreo.setText(null);
+       txtDireccion.setText(null);
+            btnAgregar.setEnabled(true);
+            btnModificar.setEnabled(false);
+            btnConsultar.setEnabled(true);
+            btnEliminar.setEnabled(false);
+            btnLimpiar.setEnabled(false);
+    }
+    public void LimpiarTabla(){
+                try 
+            {
+            DefaultTableModel modelo=(DefaultTableModel) tabla.getModel();
+            int filas=tabla.getRowCount();
+            for (int i = 0;filas>i; i++) {
+            modelo.removeRow(0);
+            }
+            } 
+            catch (Exception e) 
+            {
+                JOptionPane.showMessageDialog(null, "Error al limpiar la tabla");
+            }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -31,7 +75,7 @@ public class empleado extends javax.swing.JFrame {
 
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jt_trabajador = new javax.swing.JTable();
+        tabla = new javax.swing.JTable();
         btnAgregar = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
@@ -70,10 +114,15 @@ public class empleado extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
         setType(java.awt.Window.Type.UTILITY);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jt_trabajador.setModel(new javax.swing.table.DefaultTableModel(
+        tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
                 {},
@@ -84,9 +133,14 @@ public class empleado extends javax.swing.JFrame {
 
             }
         ));
-        jScrollPane2.setViewportView(jt_trabajador);
+        jScrollPane2.setViewportView(tabla);
 
         btnAgregar.setText("Agregar");
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
 
         btnModificar.setText("Modificar");
 
@@ -365,7 +419,17 @@ public class empleado extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
-        // TODO add your handling code here:
+        btnAgregar.setEnabled(false);
+        btnModificar.setEnabled(true);
+        btnEliminar.setEnabled(true);
+        btnConsultar.setEnabled(false);
+        btnLimpiar.setEnabled(true);
+        claces.empleados f=new claces.empleados();
+        try {
+            f.llenarTabla(tabla);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, e.getMessage());
+        }
     }//GEN-LAST:event_btnConsultarActionPerformed
 
     private void txtDuiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDuiActionPerformed
@@ -373,8 +437,62 @@ public class empleado extends javax.swing.JFrame {
     }//GEN-LAST:event_txtDuiActionPerformed
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
-        // TODO add your handling code here:
+        Limpiar();
+        LimpiarTabla();
     }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+            try{
+        btnAgregar.setEnabled(true);
+            btnModificar.setEnabled(false);
+            btnConsultar.setEnabled(true);
+            btnEliminar.setEnabled(false);
+            btnLimpiar.setEnabled(false);
+            cmbCargo.setSelectedItem(claces.Conexion.Cargo);
+             SentenciaSQL = Conexion.mthPrepararSentenciaSQL("SELECT MAX(id_trabajador) FROM trabajador");
+             ResultSet rs = Conexion.mthObtenerValor(SentenciaSQL);
+             rs.last();
+             if (rs.getRow()==0)
+             {
+                 maximo=0+1;
+             }
+             else
+             {
+                 maximo= rs.getInt(1)+1;
+             }
+         } catch (SQLException ex) {
+             Logger.getLogger(empleado.class.getName()).log(Level.SEVERE, null, ex);
+         }
+    }//GEN-LAST:event_formWindowOpened
+
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+            empleados obj = new empleados();
+            obj.setPregunta(pregunta.getText());
+            obj.setMateria(materia.getSelectedItem().toString());
+            obj.setUrl(url);
+            obj.setCorrecta(correcta.getText());
+            obj.setOpcion1(opcion1.getText());
+            obj.setOpcion2(opcion2.getText());
+            obj.setOpcion3(opcion3.getText());
+            if(obj.GuardarPregunta())
+            {
+             
+                    SentenciaSQL = Conexion.mthPrepararSentenciaSQL("SELECT MAX(id_pregunta) FROM preguntas");
+                    ResultSet rs = Conexion.mthObtenerValor(SentenciaSQL);
+                    rs.last();
+                    obj.setId_pregunta(rs.getInt(1));
+                    obj.GuardarRespuestas();                      
+                    JOptionPane.showMessageDialog(this, "Datos Guardados");
+                    Limpiar();
+                
+                        
+                    }
+                    else
+                    {
+                        JOptionPane.showMessageDialog(this,"Verifique la pregunta. Esta pregunta existir");
+                    }
+         
+    }//GEN-LAST:event_btnAgregarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -435,7 +553,7 @@ public class empleado extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jt_trabajador;
+    private javax.swing.JTable tabla;
     private javax.swing.JTextField txtApellidos;
     private javax.swing.JTextField txtCorreo;
     private javax.swing.JTextField txtDireccion;
