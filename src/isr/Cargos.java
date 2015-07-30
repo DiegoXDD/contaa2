@@ -32,6 +32,8 @@ public class Cargos extends javax.swing.JFrame {
         initComponents();
         txtId.setVisible(false);
         setLocationRelativeTo(null);
+        txtDescripcion.setLineWrap(true);
+        txtDescripcion.setWrapStyleWord(true);
     }
  public void Limpiar(){
         txtNombre.setText(null);
@@ -87,6 +89,11 @@ public class Cargos extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
         setType(java.awt.Window.Type.UTILITY);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -283,6 +290,14 @@ public class Cargos extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(this,"Verifique el nombre del cargo. Podría existir.");
                     }
     }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+            btnAgregar.setEnabled(true);
+            btnModificar.setEnabled(false);
+            btnConsultar.setEnabled(true);
+            btnEliminar.setEnabled(false);
+            btnLimpiar.setEnabled(false);
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
