@@ -135,8 +135,8 @@ public class empleados {
         {
         resp = true;
         }
-//        cmd.close();
-//        cn.close();
+        cmd.close();
+        cn.close();
         }
         catch (Exception e) {
         System.out.println(e.toString());
@@ -149,7 +149,7 @@ public class empleados {
         try
         {
         //Realizar consulta UPDATE
-        String sql = "UPDATE trabajador SET  nombre_trabajador=?, apellido_trabajador=?, dui_trabajador=? , nit_trabajador=?, telefono_trabajador=?, correo_trabajador=?, direccion_trabajador,id_cargo=? WHERE id_trabajador= ?";
+        String sql = "UPDATE trabajador SET  nombre_trabajador=?, apellido_trabajador=?, dui_trabajador=? , nit_trabajador=?, telefono_trabajador=?, correo_trabajador=?, direccion_trabajador=? ,id_cargo=? WHERE id_trabajador= ?";
         PreparedStatement cmd = cn.prepareStatement(sql);
         //Llenar los parámetros
         cmd.setString(1, nombre_trabajador);
@@ -160,6 +160,7 @@ public class empleados {
         cmd.setString(6, correo_trabajador);
         cmd.setString(7, direccion_trabajador);
         cmd.setInt(8, cargo);
+        cmd.setInt(9, id);
         //Si da error devuelve 1, caso contrario 0
         //Tomar en cuenta el "!" de negación
         if(!cmd.execute())
@@ -201,7 +202,7 @@ public class empleados {
             return resp;
             }
         public void llenarTabla(JTable tabla)throws Exception{
-        ps=cn.prepareStatement("select * from trabajador");
+        ps=cn.prepareStatement("SELECT id_trabajador, nombre_trabajador, apellido_trabajador, dui_trabajador, nit_trabajador, telefono_trabajador, correo_trabajador, direccion_trabajador, nombre_cargo FROM trabajador, cargos where trabajador.id_cargo=cargos.id_cargo ");
                // ps.setInt(1, id_sucursal);
         rs=ps.executeQuery();
         rsm=rs.getMetaData();
