@@ -117,14 +117,18 @@ public class empleados {
         try
         {
         //Realizar consulta INSERT
-        String sql = "INSERT INTO trabajador(nombre_trabajador,apellido_trabajador, dui_trabajador, cargo) "
-        + "VALUES(?, ?, ?, ?)";
+        String sql = "INSERT INTO trabajador(nombre_trabajador,apellido_trabajador, dui_trabajador,nit_trabajador, telefono_trabajador,correo_trabajador,direccion_trabajador, id_cargo) "
+        + "VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement cmd = cn.prepareStatement(sql);
         //Llenar los parámetros
         cmd.setString(1, nombre_trabajador);
         cmd.setString(2, apellido_trabajador);
         cmd.setString(3, dui_trabajador);
-        cmd.setInt(4, cargo);
+        cmd.setString(4, nit_trabajador);
+        cmd.setString(5, telefono_trabajador);
+        cmd.setString(6, correo_trabajador);
+        cmd.setString(7, direccion_trabajador);
+        cmd.setInt(8, cargo);
         //Si da error devuelve 1, caso contrario 0
         //Tomar en cuenta el "!" de negación
         if(!cmd.execute())
@@ -145,14 +149,17 @@ public class empleados {
         try
         {
         //Realizar consulta UPDATE
-        String sql = "UPDATE trabajador SET id_empresa= ?, nombre_trabajador=?, apellido_trabajador=?, dui_trabajador=? , cargo=? WHERE id_trabajador  = ?";
+        String sql = "UPDATE trabajador SET  nombre_trabajador=?, apellido_trabajador=?, dui_trabajador=? , nit_trabajador=?, telefono_trabajador=?, correo_trabajador=?, direccion_trabajador,id_cargo=? WHERE id_trabajador= ?";
         PreparedStatement cmd = cn.prepareStatement(sql);
         //Llenar los parámetros
-        cmd.setInt(1, id);
         cmd.setString(1, nombre_trabajador);
         cmd.setString(2, apellido_trabajador);
         cmd.setString(3, dui_trabajador);
-        cmd.setInt(4, cargo);
+        cmd.setString(4, nit_trabajador);
+        cmd.setString(5, telefono_trabajador);
+        cmd.setString(6, correo_trabajador);
+        cmd.setString(7, direccion_trabajador);
+        cmd.setInt(8, cargo);
         //Si da error devuelve 1, caso contrario 0
         //Tomar en cuenta el "!" de negación
         if(!cmd.execute())

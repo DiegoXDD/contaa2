@@ -26,7 +26,7 @@ public class cargos {
     int id;
     String nombre_cargo;
     String descripcion_cargo;
-    String salario;
+    Double salario;
     
     public int getId() {
         return id;
@@ -52,13 +52,15 @@ public class cargos {
         this.descripcion_cargo = descripcion_cargo;
     }
 
-    public String getSalario() {
+    public Double getSalario() {
         return salario;
     }
 
-    public void setSalario(String salario) {
+    public void setSalario(Double salario) {
         this.salario = salario;
     }
+
+    
         public cargos()
     {
     //Establecemos la conexión
@@ -77,7 +79,7 @@ public class cargos {
         //Llenar los parámetros
         cmd.setString(1, nombre_cargo);
         cmd.setString(2, descripcion_cargo);
-        cmd.setString(3, salario);
+        cmd.setDouble(3, salario);
         //Si da error devuelve 1, caso contrario 0
         //Tomar en cuenta el "!" de negación
         if(!cmd.execute())
@@ -98,13 +100,13 @@ public class cargos {
         try
         {
         //Realizar consulta UPDATE
-        String sql = "UPDATE cargos SET id_cargo= ?, nombre_cargo=?, descripcion_cargo=?, salario=? WHERE id_cargo  = ?";
+        String sql = "UPDATE cargos SET nombre_cargo=?, descripcion_cargo=?, salario=? WHERE id_cargo  = ?";
         PreparedStatement cmd = cn.prepareStatement(sql);
         //Llenar los parámetros
-        cmd.setInt(1, id);
-        cmd.setString(2, nombre_cargo);
-        cmd.setString(3, descripcion_cargo);
-        cmd.setString(4, salario);
+        cmd.setString(1, nombre_cargo);
+        cmd.setString(2, descripcion_cargo);
+        cmd.setDouble(3, salario);
+        cmd.setInt(4, id);
         //Si da error devuelve 1, caso contrario 0
         //Tomar en cuenta el "!" de negación
         if(!cmd.execute())

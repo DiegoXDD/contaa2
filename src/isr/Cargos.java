@@ -5,21 +5,58 @@
  */
 package isr;
 
+import claces.Conexion;
+import claces.cargos;
+import claces.empleados;
+import static java.lang.Double.parseDouble;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author HP
  */
+
 public class Cargos extends javax.swing.JFrame {
 
     /**
      * Creates new form Inicio
      */
+    private PreparedStatement SentenciaSQL; 
     public Cargos() {
         initComponents();
         txtId.setVisible(false);
         setLocationRelativeTo(null);
     }
-
+ public void Limpiar(){
+        txtNombre.setText(null);
+        txtDescripcion.setText(null);
+        txtSalario.setText(null);
+            btnAgregar.setEnabled(true);
+            btnModificar.setEnabled(false);
+            btnConsultar.setEnabled(true);
+            btnEliminar.setEnabled(false);
+            btnLimpiar.setEnabled(false);
+    }
+    public void LimpiarTabla(){
+                try 
+            {
+            DefaultTableModel modelo=(DefaultTableModel) tabla.getModel();
+            int filas=tabla.getRowCount();
+            for (int i = 0;filas>i; i++) {
+            modelo.removeRow(0);
+            }
+            } 
+            catch (Exception e) 
+            {
+                JOptionPane.showMessageDialog(null, "Error al limpiar la tabla");
+            }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -37,10 +74,10 @@ public class Cargos extends javax.swing.JFrame {
         txtNombre = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtDescripcion = new javax.swing.JTextArea();
-        salario_cargo = new javax.swing.JFormattedTextField();
+        txtSalario = new javax.swing.JFormattedTextField();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jt_cargos = new javax.swing.JTable();
+        tabla = new javax.swing.JTable();
         btnAgregar = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
@@ -66,7 +103,7 @@ public class Cargos extends javax.swing.JFrame {
         jScrollPane1.setViewportView(txtDescripcion);
 
         try {
-            salario_cargo.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.##")));
+            txtSalario.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.##")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
@@ -90,7 +127,7 @@ public class Cargos extends javax.swing.JFrame {
                                 .addGap(49, 49, 49)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 338, Short.MAX_VALUE)
-                            .addComponent(salario_cargo)))
+                            .addComponent(txtSalario)))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -114,13 +151,13 @@ public class Cargos extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(salario_cargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtSalario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(45, 45, 45))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jt_cargos.setModel(new javax.swing.table.DefaultTableModel(
+        tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
                 {},
@@ -131,9 +168,14 @@ public class Cargos extends javax.swing.JFrame {
 
             }
         ));
-        jScrollPane2.setViewportView(jt_cargos);
+        jScrollPane2.setViewportView(tabla);
 
         btnAgregar.setText("Agregar");
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
 
         btnModificar.setText("Modificar");
 
@@ -207,12 +249,40 @@ public class Cargos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
-        // TODO add your handling code here:
+         btnAgregar.setEnabled(false);
+        btnModificar.setEnabled(true);
+        btnEliminar.setEnabled(true);
+        btnConsultar.setEnabled(false);
+        btnLimpiar.setEnabled(true);
+        claces.cargos f=new claces.cargos();
+        try {
+            f.llenarTabla(tabla);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, e.getMessage());
+        }
     }//GEN-LAST:event_btnConsultarActionPerformed
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
-        // TODO add your handling code here:
+         Limpiar();
+        LimpiarTabla();
     }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+           cargos obj = new cargos();
+            obj.setNombre_cargo(txtNombre.getText());
+            obj.setDescripcion_cargo(txtDescripcion.getText());
+            obj.setSalario(parseDouble(txtSalario.getText()));
+            if(obj.guardarCargo())
+            {
+                    obj.guardarCargo();                      
+                    JOptionPane.showMessageDialog(this, "Datos Guardados");
+                    Limpiar();
+                    }
+                    else
+                    {
+                        JOptionPane.showMessageDialog(this,"Verifique el nombre del cargo. Podría existir.");
+                    }
+    }//GEN-LAST:event_btnAgregarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -263,10 +333,10 @@ public class Cargos extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jt_cargos;
-    private javax.swing.JFormattedTextField salario_cargo;
+    private javax.swing.JTable tabla;
     private javax.swing.JTextArea txtDescripcion;
     private javax.swing.JLabel txtId;
     private javax.swing.JTextField txtNombre;
+    private javax.swing.JFormattedTextField txtSalario;
     // End of variables declaration//GEN-END:variables
 }

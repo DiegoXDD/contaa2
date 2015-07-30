@@ -44,6 +44,7 @@ public class empleado extends javax.swing.JFrame {
         txtTelefono.setText(null);
        txtCorreo.setText(null);
        txtDireccion.setText(null);
+       cmbCargo.setSelectedIndex(-1);
             btnAgregar.setEnabled(true);
             btnModificar.setEnabled(false);
             btnConsultar.setEnabled(true);
@@ -449,17 +450,17 @@ public class empleado extends javax.swing.JFrame {
             btnEliminar.setEnabled(false);
             btnLimpiar.setEnabled(false);
             cmbCargo.setSelectedItem(claces.Conexion.Cargo);
-             SentenciaSQL = Conexion.mthPrepararSentenciaSQL("SELECT MAX(id_trabajador) FROM trabajador");
+             SentenciaSQL = Conexion.mthPrepararSentenciaSQL("SELECT nombre_cargo FROM cargos");
              ResultSet rs = Conexion.mthObtenerValor(SentenciaSQL);
              rs.last();
-             if (rs.getRow()==0)
-             {
-                 maximo=0+1;
-             }
-             else
-             {
-                 maximo= rs.getInt(1)+1;
-             }
+//             if (rs.getRow()==0)
+//             {
+//                 maximo=0+1;
+//             }
+//             else
+//             {
+//                 maximo= rs.getInt(1)+1;
+//             }
          } catch (SQLException ex) {
              Logger.getLogger(empleado.class.getName()).log(Level.SEVERE, null, ex);
          }
@@ -467,31 +468,31 @@ public class empleado extends javax.swing.JFrame {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
             empleados obj = new empleados();
-            obj.setPregunta(pregunta.getText());
-            obj.setMateria(materia.getSelectedItem().toString());
-            obj.setUrl(url);
-            obj.setCorrecta(correcta.getText());
-            obj.setOpcion1(opcion1.getText());
-            obj.setOpcion2(opcion2.getText());
-            obj.setOpcion3(opcion3.getText());
-            if(obj.GuardarPregunta())
+            obj.setNombre_trabajador(txtNombres.getText());
+            obj.setApellido_trabajador(txtApellidos.getText());
+            obj.setDui_trabajador(txtApellidos.getText());
+            obj.setNit_trabajador(txtNit.getText());
+            obj.setTelefono_trabajador(txtNit.getText());
+            obj.setCorreo_trabajador(txtCorreo.getText());
+            obj.setDireccion_trabajador(txtDireccion.getText());
+            if(obj.guardarEmpleado())
             {
-             
-                    SentenciaSQL = Conexion.mthPrepararSentenciaSQL("SELECT MAX(id_pregunta) FROM preguntas");
+                try {
+                    SentenciaSQL = Conexion.mthPrepararSentenciaSQL("SELECT id_cargo FROM cargos WHERE nombre_cargo= " +cmbCargo.getSelectedItem());
                     ResultSet rs = Conexion.mthObtenerValor(SentenciaSQL);
                     rs.last();
-                    obj.setId_pregunta(rs.getInt(1));
-                    obj.GuardarRespuestas();                      
+                    obj.setCargo(rs.getInt(1));
+                    obj.guardarEmpleado();                      
                     JOptionPane.showMessageDialog(this, "Datos Guardados");
                     Limpiar();
-                
-                        
+                } catch (SQLException ex) {
+                    Logger.getLogger(empleado.class.getName()).log(Level.SEVERE, null, ex);
+                }
                     }
                     else
                     {
-                        JOptionPane.showMessageDialog(this,"Verifique la pregunta. Esta pregunta existir");
+                        JOptionPane.showMessageDialog(this,"Verifique el DUI, NIT. Estos datos ya podrían existir");
                     }
-         
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     /**
