@@ -213,13 +213,13 @@ public class descuentos extends javax.swing.JFrame {
             //Creamos los parametros
             //Aunq no los necesitamos para este reporte
             Map parametros = new HashMap();
-            parametros.put("parameter1", Conexion.NombreUsuario);
+            //parametros.put("parameter1", Conexion.NombreUsuario);
             //Creamos el Objeto Reporte
             JasperReport reporte = (JasperReport)JRLoader.loadObject(path);
             //Creamos el objeto de impresion de reporte
             JasperPrint imprimir = JasperFillManager.fillReport(reporte, parametros, cn);
             //Ahora solo falta crear el Visor-formulario donde se muestra el reporte-
-            JDialog viewer = new JDialog(new JFrame(),"Reporte de Inventario", true);
+            JDialog viewer = new JDialog(new JFrame(),"Planilla General", true);
             viewer.setSize(1024,720);
             viewer.setLocationRelativeTo(null);
             JRViewer jrv = new JRViewer(imprimir);
