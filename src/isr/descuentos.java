@@ -7,8 +7,19 @@ package isr;
 
 import claces.Conexion;
 import java.awt.event.ItemEvent;
+import java.net.URLDecoder;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.util.HashMap;
+import java.util.Map;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.swing.JRViewer;
 
 /**
  *
@@ -79,6 +90,11 @@ public class descuentos extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTextPane1);
 
         btnImprimir.setText("Imprimir");
+        btnImprimir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImprimirActionPerformed(evt);
+            }
+        });
 
         btnLimpiar.setText("Limpiar");
         btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
@@ -183,6 +199,38 @@ public class descuentos extends javax.swing.JFrame {
         dui.setText("");
         btnImprimir.setEnabled(false);
     }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
+                String path = ""; //Ubicacion del reporte
+        try
+        {
+            //Llamamos la ubicación
+            path = getClass().getResource("/Reportes/Inventario.jasper").getPath();
+            //Decodificamos -esto es por si acaso un caracter especial nos falla
+            path = URLDecoder.decode(path, "UTF-8");
+            //Creamos la conexion
+            Connection cn = new Conexion().conect();
+            //Creamos los parametros
+            //Aunq no los necesitamos para este reporte
+            Map parametros = new HashMap();
+            parametros.put("parameter1", Conexion.NombreUsuario);
+            //Creamos el Objeto Reporte
+            JasperReport reporte = (JasperReport)JRLoader.loadObject(path);
+            //Creamos el objeto de impresion de reporte
+            JasperPrint imprimir = JasperFillManager.fillReport(reporte, parametros, cn);
+            //Ahora solo falta crear el Visor-formulario donde se muestra el reporte-
+            JDialog viewer = new JDialog(new JFrame(),"Reporte de Inventario", true);
+            viewer.setSize(1024,720);
+            viewer.setLocationRelativeTo(null);
+            JRViewer jrv = new JRViewer(imprimir);
+            viewer.getContentPane().add(jrv);
+            viewer.setVisible(true);
+        }
+        catch(Exception ex)
+        {
+            System.out.println(ex.toString());
+        }
+    }//GEN-LAST:event_btnImprimirActionPerformed
 
     /**
      * @param args the command line arguments
