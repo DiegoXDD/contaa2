@@ -93,7 +93,7 @@ public class Cargos extends javax.swing.JFrame {
         btnConsultar = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("CARGOS");
         setResizable(false);
         setType(java.awt.Window.Type.UTILITY);
