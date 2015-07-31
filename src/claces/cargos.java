@@ -86,8 +86,8 @@ public class cargos {
         {
         resp = true;
         }
-//        cmd.close();
-//        cn.close();
+        cmd.close();
+        cn.close();
         }
         catch (Exception e) {
         System.out.println(e.toString());

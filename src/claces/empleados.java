@@ -135,8 +135,8 @@ public class empleados {
         {
         resp = true;
         }
-//        cmd.close();
-//        cn.close();
+        cmd.close();
+        cn.close();
         }
         catch (Exception e) {
         System.out.println(e.toString());
@@ -167,8 +167,8 @@ public class empleados {
         {
         resp = true;
         }
-//        cmd.close();
-//        cn.close();
+        cmd.close();
+        cn.close();
         }
         catch (Exception e) {
         System.out.println(e.toString());
@@ -193,8 +193,8 @@ public class empleados {
             {
             resp = true;
             }
-//            cmd.close();
-//            cn.close();
+            cmd.close();
+            cn.close();
             }
             catch (Exception e) {
             System.out.println(e.toString());

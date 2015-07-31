@@ -83,7 +83,7 @@ public class Cargos extends javax.swing.JFrame {
         txtNombre = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtDescripcion = new javax.swing.JTextArea();
-        txtSalario = new javax.swing.JFormattedTextField();
+        txtSalario = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tabla = new javax.swing.JTable();
@@ -117,12 +117,6 @@ public class Cargos extends javax.swing.JFrame {
         txtDescripcion.setRows(5);
         jScrollPane1.setViewportView(txtDescripcion);
 
-        try {
-            txtSalario.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -141,8 +135,8 @@ public class Cargos extends javax.swing.JFrame {
                                     .addComponent(id))
                                 .addGap(49, 49, 49)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtSalario)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 362, Short.MAX_VALUE)))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 362, Short.MAX_VALUE)
+                            .addComponent(txtSalario)))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -163,11 +157,15 @@ public class Cargos extends javax.swing.JFrame {
                         .addGap(28, 28, 28)
                         .addComponent(id))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtSalario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(45, 45, 45))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(45, 45, 45))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtSalario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -313,7 +311,6 @@ public class Cargos extends javax.swing.JFrame {
             obj.setNombre_cargo(txtNombre.getText());
             obj.setDescripcion_cargo(txtDescripcion.getText());
             obj.setSalario(parseDouble(txtSalario.getText()));
-            ob.setCargo(parseInt(id.getText()));
             double afp=0.00, isr=0.00, total=0.00, salario_final=0.00, salario_sinafp=0.00;
             afp= (parseDouble(txtSalario.getText()) * 0.0625);
             salario_sinafp= parseDouble(txtSalario.getText())-afp;
@@ -329,7 +326,7 @@ public class Cargos extends javax.swing.JFrame {
             }
             else if (parseDouble(txtSalario.getText())>=487.61 && parseDouble(txtSalario.getText())<=642.85)
             {
-                isr= parseDouble(txtSalario.getText())-487.60;
+                isr= ((salario_sinafp-487.60)*0.10)+17.48;
                 total= afp + isr;
                 salario_final= parseDouble(txtSalario.getText()) - afp - isr;
                 ob.setAfp(afp);
@@ -339,7 +336,7 @@ public class Cargos extends javax.swing.JFrame {
             }
             else if (parseDouble(txtSalario.getText())>=642.86 && parseDouble(txtSalario.getText())<=915.81)
             {
-                isr= parseDouble(txtSalario.getText())-642.85;
+                isr= ((salario_sinafp-642.85)*0.10)+32.70;
                 total= afp + isr;
                 salario_final= parseDouble(txtSalario.getText()) - afp - isr;
                 ob.setAfp(afp);
@@ -349,7 +346,7 @@ public class Cargos extends javax.swing.JFrame {
             }
             else if (parseDouble(txtSalario.getText())>=915.82 && parseDouble(txtSalario.getText())<=2058.67)
             {
-                isr= parseDouble(txtSalario.getText())-915.81;
+                isr= ((salario_sinafp-915.81)*0.20)+60.00;
                 total= afp + isr;
                 salario_final= parseDouble(txtSalario.getText()) - afp - isr;
                 ob.setAfp(afp);
@@ -359,7 +356,7 @@ public class Cargos extends javax.swing.JFrame {
             }
             else if (parseDouble(txtSalario.getText())>=2058.68)
             {
-                isr= parseDouble(txtSalario.getText())-2058.67;
+                isr= ((salario_sinafp-2058.67)*0.30)+288.57;
                 total= afp + isr;
                 salario_final= parseDouble(txtSalario.getText()) - afp - isr;
                 ob.setAfp(afp);
@@ -369,11 +366,18 @@ public class Cargos extends javax.swing.JFrame {
             }
             if(obj.guardarCargo())
             {
-                    obj.guardarCargo();       
-                    ob.guardarDescuentos();
-                    JOptionPane.showMessageDialog(this, "Datos Guardados");
-                    Limpiar();
-                    LimpiarTabla();
+               try {
+                   SentenciaSQL = Conexion.mthPrepararSentenciaSQL("SELECT max(id_cargo) FROM cargos ");
+                   ResultSet rs = Conexion.mthObtenerValor(SentenciaSQL);
+                   rs.last();
+                   ob.setCargo(rs.getInt(1));
+                   ob.guardarDescuentos();
+                   JOptionPane.showMessageDialog(this, "Datos Guardados");
+                   Limpiar();
+                   LimpiarTabla();
+               } catch (SQLException ex) {
+                   Logger.getLogger(Cargos.class.getName()).log(Level.SEVERE, null, ex);
+               }
                     }
                     else
                     {
@@ -403,7 +407,7 @@ public class Cargos extends javax.swing.JFrame {
             obj.setDescripcion_cargo(txtDescripcion.getText());
             obj.setSalario(parseDouble(txtSalario.getText()));
             obj.setId(parseInt(id.getText()));
-            ob.setCargo(parseInt(id.getText()));
+            ob.setCargo(Integer.parseInt(id.getText()));
             double afp=0.00, isr=0.00, total=0.00, salario_final=0.00, salario_sinafp=0.00;
             afp= (parseDouble(txtSalario.getText()) * 0.0625);
             salario_sinafp= parseDouble(txtSalario.getText())-afp;
@@ -419,7 +423,7 @@ public class Cargos extends javax.swing.JFrame {
             }
             else if (parseDouble(txtSalario.getText())>=487.61 && parseDouble(txtSalario.getText())<=642.85)
             {
-                isr= parseDouble(txtSalario.getText())-487.60;
+                isr= ((salario_sinafp-487.60)*0.10)+17.48;
                 total= afp + isr;
                 salario_final= parseDouble(txtSalario.getText()) - afp - isr;
                 ob.setAfp(afp);
@@ -429,7 +433,7 @@ public class Cargos extends javax.swing.JFrame {
             }
             else if (parseDouble(txtSalario.getText())>=642.86 && parseDouble(txtSalario.getText())<=915.81)
             {
-                isr= parseDouble(txtSalario.getText())-642.85;
+                isr= ((salario_sinafp-642.85)*0.10)+32.70;
                 total= afp + isr;
                 salario_final= parseDouble(txtSalario.getText()) - afp - isr;
                 ob.setAfp(afp);
@@ -439,7 +443,7 @@ public class Cargos extends javax.swing.JFrame {
             }
             else if (parseDouble(txtSalario.getText())>=915.82 && parseDouble(txtSalario.getText())<=2058.67)
             {
-                isr= parseDouble(txtSalario.getText())-915.81;
+                isr= ((salario_sinafp-915.81)*0.20)+60.00;
                 total= afp + isr;
                 salario_final= parseDouble(txtSalario.getText()) - afp - isr;
                 ob.setAfp(afp);
@@ -449,7 +453,7 @@ public class Cargos extends javax.swing.JFrame {
             }
             else if (parseDouble(txtSalario.getText())>=2058.68)
             {
-                isr= parseDouble(txtSalario.getText())-2058.67;
+                isr= ((salario_sinafp-2058.67)*0.30)+288.57;
                 total= afp + isr;
                 salario_final= parseDouble(txtSalario.getText()) - afp - isr;
                 ob.setAfp(afp);
@@ -459,7 +463,6 @@ public class Cargos extends javax.swing.JFrame {
             }
             if(obj.modificarCargo())
             {
-                    obj.modificarCargo();     
                     ob.modificarDescuento();
                     JOptionPane.showMessageDialog(this, "Datos Modificados");
                     Limpiar();
@@ -479,9 +482,9 @@ public class Cargos extends javax.swing.JFrame {
         int ide= Integer.parseInt(id.getText());
         obj.setId(ide);
         ob.setCargo(ide);
+        ob.eliminarDescuento();
         if(obj.eliminarContacto())
         {
-            obj.eliminarContacto();
             ob.eliminarDescuento();
             JOptionPane.showMessageDialog(this, "Datos Eliminados");
             Limpiar();
@@ -549,6 +552,6 @@ public class Cargos extends javax.swing.JFrame {
     private javax.swing.JTable tabla;
     private javax.swing.JTextArea txtDescripcion;
     private javax.swing.JTextField txtNombre;
-    private javax.swing.JFormattedTextField txtSalario;
+    private javax.swing.JTextField txtSalario;
     // End of variables declaration//GEN-END:variables
 }

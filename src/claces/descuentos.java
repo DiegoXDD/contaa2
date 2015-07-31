@@ -96,7 +96,7 @@ public class descuentos {
         cmd.setDouble(2, isr);
         cmd.setDouble(3, total);
         cmd.setDouble(4, salario_final);
-        cmd.setDouble(4, cargo);
+        cmd.setInt(5, cargo);
         //Si da error devuelve 1, caso contrario 0
         //Tomar en cuenta el "!" de negación
         if(!cmd.execute())
@@ -120,11 +120,12 @@ public class descuentos {
         String sql = "UPDATE descuentos SET  afp=?, isr=?, total=?, salario_final=?, id_cargo=? WHERE id_cargo= ?";
         PreparedStatement cmd = cn.prepareStatement(sql);
         //Llenar los parámetros
+        cmd.setDouble(1, afp);
         cmd.setDouble(2, isr);
         cmd.setDouble(3, total);
         cmd.setDouble(4, salario_final);
         cmd.setInt(5, cargo);
-        cmd.setInt(6, id);
+        cmd.setInt(6, cargo);
         //Si da error devuelve 1, caso contrario 0
         //Tomar en cuenta el "!" de negación
         if(!cmd.execute())
