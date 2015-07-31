@@ -118,7 +118,7 @@ public class Cargos extends javax.swing.JFrame {
         jScrollPane1.setViewportView(txtDescripcion);
 
         try {
-            txtSalario.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####.##")));
+            txtSalario.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
@@ -309,12 +309,68 @@ public class Cargos extends javax.swing.JFrame {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
            cargos obj = new cargos();
+           claces.descuentos ob = new claces.descuentos();
             obj.setNombre_cargo(txtNombre.getText());
             obj.setDescripcion_cargo(txtDescripcion.getText());
             obj.setSalario(parseDouble(txtSalario.getText()));
+            ob.setCargo(parseInt(id.getText()));
+            double afp=0.00, isr=0.00, total=0.00, salario_final=0.00, salario_sinafp=0.00;
+            afp= (parseDouble(txtSalario.getText()) * 0.0625);
+            salario_sinafp= parseDouble(txtSalario.getText())-afp;
+            if (parseDouble(txtSalario.getText())>=0.01 && parseDouble(txtSalario.getText())<=487.60)
+            {
+                isr= 0.00;
+                total= afp + isr;
+                salario_final= parseDouble(txtSalario.getText()) - afp - isr;
+                ob.setAfp(afp);
+                ob.setIsr(isr);
+                ob.setTotal(total);
+                ob.setSalario_final(salario_final);
+            }
+            else if (parseDouble(txtSalario.getText())>=487.61 && parseDouble(txtSalario.getText())<=642.85)
+            {
+                isr= parseDouble(txtSalario.getText())-487.60;
+                total= afp + isr;
+                salario_final= parseDouble(txtSalario.getText()) - afp - isr;
+                ob.setAfp(afp);
+                ob.setIsr(isr);
+                ob.setTotal(total);
+                ob.setSalario_final(salario_final);
+            }
+            else if (parseDouble(txtSalario.getText())>=642.86 && parseDouble(txtSalario.getText())<=915.81)
+            {
+                isr= parseDouble(txtSalario.getText())-642.85;
+                total= afp + isr;
+                salario_final= parseDouble(txtSalario.getText()) - afp - isr;
+                ob.setAfp(afp);
+                ob.setIsr(isr);
+                ob.setTotal(total);
+                ob.setSalario_final(salario_final);
+            }
+            else if (parseDouble(txtSalario.getText())>=915.82 && parseDouble(txtSalario.getText())<=2058.67)
+            {
+                isr= parseDouble(txtSalario.getText())-915.81;
+                total= afp + isr;
+                salario_final= parseDouble(txtSalario.getText()) - afp - isr;
+                ob.setAfp(afp);
+                ob.setIsr(isr);
+                ob.setTotal(total);
+                ob.setSalario_final(salario_final);
+            }
+            else if (parseDouble(txtSalario.getText())>=2058.68)
+            {
+                isr= parseDouble(txtSalario.getText())-2058.67;
+                total= afp + isr;
+                salario_final= parseDouble(txtSalario.getText()) - afp - isr;
+                ob.setAfp(afp);
+                ob.setIsr(isr);
+                ob.setTotal(total);
+                ob.setSalario_final(salario_final);
+            }
             if(obj.guardarCargo())
             {
-                    obj.guardarCargo();                      
+                    obj.guardarCargo();       
+                    ob.guardarDescuentos();
                     JOptionPane.showMessageDialog(this, "Datos Guardados");
                     Limpiar();
                     LimpiarTabla();
@@ -342,13 +398,69 @@ public class Cargos extends javax.swing.JFrame {
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
             cargos obj = new cargos();
+            claces.descuentos ob = new claces.descuentos();
             obj.setNombre_cargo(txtNombre.getText());
             obj.setDescripcion_cargo(txtDescripcion.getText());
             obj.setSalario(parseDouble(txtSalario.getText()));
             obj.setId(parseInt(id.getText()));
+            ob.setCargo(parseInt(id.getText()));
+            double afp=0.00, isr=0.00, total=0.00, salario_final=0.00, salario_sinafp=0.00;
+            afp= (parseDouble(txtSalario.getText()) * 0.0625);
+            salario_sinafp= parseDouble(txtSalario.getText())-afp;
+            if (parseDouble(txtSalario.getText())>=0.01 && parseDouble(txtSalario.getText())<=487.60)
+            {
+                isr= 0.00;
+                total= afp + isr;
+                salario_final= parseDouble(txtSalario.getText()) - afp - isr;
+                ob.setAfp(afp);
+                ob.setIsr(isr);
+                ob.setTotal(total);
+                ob.setSalario_final(salario_final);
+            }
+            else if (parseDouble(txtSalario.getText())>=487.61 && parseDouble(txtSalario.getText())<=642.85)
+            {
+                isr= parseDouble(txtSalario.getText())-487.60;
+                total= afp + isr;
+                salario_final= parseDouble(txtSalario.getText()) - afp - isr;
+                ob.setAfp(afp);
+                ob.setIsr(isr);
+                ob.setTotal(total);
+                ob.setSalario_final(salario_final);
+            }
+            else if (parseDouble(txtSalario.getText())>=642.86 && parseDouble(txtSalario.getText())<=915.81)
+            {
+                isr= parseDouble(txtSalario.getText())-642.85;
+                total= afp + isr;
+                salario_final= parseDouble(txtSalario.getText()) - afp - isr;
+                ob.setAfp(afp);
+                ob.setIsr(isr);
+                ob.setTotal(total);
+                ob.setSalario_final(salario_final);
+            }
+            else if (parseDouble(txtSalario.getText())>=915.82 && parseDouble(txtSalario.getText())<=2058.67)
+            {
+                isr= parseDouble(txtSalario.getText())-915.81;
+                total= afp + isr;
+                salario_final= parseDouble(txtSalario.getText()) - afp - isr;
+                ob.setAfp(afp);
+                ob.setIsr(isr);
+                ob.setTotal(total);
+                ob.setSalario_final(salario_final);
+            }
+            else if (parseDouble(txtSalario.getText())>=2058.68)
+            {
+                isr= parseDouble(txtSalario.getText())-2058.67;
+                total= afp + isr;
+                salario_final= parseDouble(txtSalario.getText()) - afp - isr;
+                ob.setAfp(afp);
+                ob.setIsr(isr);
+                ob.setTotal(total);
+                ob.setSalario_final(salario_final);
+            }
             if(obj.modificarCargo())
             {
-                    obj.modificarCargo();                      
+                    obj.modificarCargo();     
+                    ob.modificarDescuento();
                     JOptionPane.showMessageDialog(this, "Datos Modificados");
                     Limpiar();
                     LimpiarTabla();
@@ -363,11 +475,14 @@ public class Cargos extends javax.swing.JFrame {
          if (JOptionPane.showConfirmDialog(null, "¿Desea realizar la operación?" , "WARNING/AVISO", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
        {
         cargos obj = new  cargos();
+        claces.descuentos ob = new  claces.descuentos();
         int ide= Integer.parseInt(id.getText());
         obj.setId(ide);
+        ob.setCargo(ide);
         if(obj.eliminarContacto())
         {
             obj.eliminarContacto();
+            ob.eliminarDescuento();
             JOptionPane.showMessageDialog(this, "Datos Eliminados");
             Limpiar();
             LimpiarTabla();

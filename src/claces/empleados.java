@@ -135,8 +135,8 @@ public class empleados {
         {
         resp = true;
         }
-        cmd.close();
-        cn.close();
+//        cmd.close();
+//        cn.close();
         }
         catch (Exception e) {
         System.out.println(e.toString());
@@ -167,8 +167,8 @@ public class empleados {
         {
         resp = true;
         }
-        cmd.close();
-        cn.close();
+//        cmd.close();
+//        cn.close();
         }
         catch (Exception e) {
         System.out.println(e.toString());
@@ -193,14 +193,15 @@ public class empleados {
             {
             resp = true;
             }
-            cmd.close();
-            cn.close();
+//            cmd.close();
+//            cn.close();
             }
             catch (Exception e) {
             System.out.println(e.toString());
             }
             return resp;
             }
+            
         public void llenarTabla(JTable tabla)throws Exception{
         ps=cn.prepareStatement("SELECT id_trabajador, nombre_trabajador, apellido_trabajador, dui_trabajador, nit_trabajador, telefono_trabajador, correo_trabajador, direccion_trabajador, nombre_cargo FROM trabajador, cargos where trabajador.id_cargo=cargos.id_cargo ");
                // ps.setInt(1, id_sucursal);
